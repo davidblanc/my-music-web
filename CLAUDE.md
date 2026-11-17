@@ -2,18 +2,26 @@
 
 Web del cantautor David Blanc (`davidblanc.com`): una home con hero, música,
 próximos shows, biografía y contacto, más `/concerts`. React Router 7 (modo
-framework, SSR) sobre Node, Tailwind 3, Vite 5, React 18.
+framework, SSR) sobre Cloudflare Workers (`@cloudflare/vite-plugin`,
+`wrangler.jsonc`, entry en `workers/app.ts`), Tailwind 3, Vite 6, React 18.
 
 Antes de trabajar: lee `STATUS.md` y `backlog.json`. Para decisiones de
 producto (textos, datos de la marca), `docs/producto.md`.
 
 ## Comandos
 
-- `npm run dev`: servidor de desarrollo (`react-router dev`; en un worktree
-  pasa `--port` y `--host 127.0.0.1`).
-- `npm run verify`: lint + typecheck (`react-router typegen && tsc`) + tests
-  (Vitest). Es la definición de "hecho".
-- `npm run build` / `npm start`: build de producción y `react-router-serve`.
+- `npm run dev`: servidor de desarrollo (`react-router dev`; el código de
+  servidor corre en workerd). En un worktree pasa `--port` y
+  `--host 127.0.0.1`.
+- `npm run verify`: lint + typecheck (`wrangler types && react-router typegen
+  && tsc`) + tests (Vitest). Es la definición de "hecho".
+- `npm run build`: build de producción (`build/client` con los assets
+  estáticos y `build/server` con el Worker).
+- `npm run preview`: build + `vite preview`, que ejecuta el Worker en local
+  con workerd. En un worktree: `npm run build && npx vite preview --port
+  <puerto> --host 127.0.0.1`.
+- `npm run deploy` (`wrangler deploy`) existe pero los agentes no lo usan:
+  despliega Workers Builds (ver `## Project rules`).
 
 ## Estructura
 
@@ -30,10 +38,10 @@ producto (textos, datos de la marca), `docs/producto.md`.
 - **Datos de la marca**: nombres, textos, fechas, discos, redes y contacto
   salen de la web actual o de `docs/producto.md`. No inventes ninguno; lo que
   falte es una pregunta para David.
-- **Despliegue**: hoy la web corre en Fly.io (`fly.toml`, app `davidblancv1`)
-  con el `dockerfile`. Ningún agente ejecuta `fly deploy` ni cambia la
-  configuración de despliegue. No borres `fly.toml` ni `dockerfile` hasta que
-  la migración a Cloudflare esté en producción.
+- **Despliegue**: la web corre en Cloudflare Workers con Workers Builds.
+  Fusionar en `main` publica en producción (davidblanc.com); cada PR tiene su
+  URL de preview. Ningún agente ejecuta `wrangler deploy` ni cambia la
+  configuración de Workers Builds, del dominio o del DNS.
 - **Cambios visuales**: cualquier cambio que se vea en la web lleva capturas
   antes/después a 1440×900 y 390×844. Hasta que existan
   `docs/design-brief.md` y `DESIGN.md`, se respeta el aspecto actual.

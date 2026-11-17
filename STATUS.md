@@ -7,7 +7,7 @@
 
 ## Current state
 
-_Updated 2026-11-17 (AGE-143)._
+_Updated 2026-11-17 (AGE-145)._
 
 - Web oficial de David Blanc migrada de Remix 2 a **React Router 7** (modo
   framework, SSR, `react-router-serve` sobre Node). Aspecto y contenido
@@ -22,16 +22,20 @@ _Updated 2026-11-17 (AGE-143)._
   `wrangler.jsonc` (Worker `davidblanc`), entry en `workers/app.ts` y
   `app/entry.server.tsx` con `renderToReadableStream`. Imágenes y JS/CSS se
   sirven como assets estáticos del Worker (`build/client`).
-- Despliegue previsto: Workers Builds (producción al fusionar en `main`,
-  preview por PR). **Pendiente de David**: conectar el repo y mover
-  `davidblanc.com` a Cloudflare (pasos en el README). Ningún agente ejecuta
-  `wrangler deploy` ni toca DNS.
-- Producción hoy: sigue en Fly.io (`fly.toml`, app `davidblancv1`) con la
-  imagen ya desplegada. Ojo: desde AGE-143 el `dockerfile` ya no construye
-  desde `main` (no hay `react-router-serve`); se borra con `remove-fly-io`.
+- Producción: **Cloudflare Workers con Workers Builds** (AGE-145).
+  Fusionar en `main` publica en davidblanc.com y www.davidblanc.com
+  (`server: cloudflare`); cada PR tiene su URL de preview. Ningún agente
+  ejecuta `wrangler deploy` ni toca Workers Builds, el dominio o el DNS.
+  Fly.io quitado del repo (sin `fly.toml`, `dockerfile` ni `.dockerignore`).
+- `<html lang="es">`; sin el `<link>` muerto a `/build/tailwind.css` ni el
+  `console.log("loaded")` del reproductor de Spotify (tests en
+  `test/root.test.tsx`).
 
 ## Recent decisions
 
+- 2026-11-17 (AGE-145): se borran `fly.toml`, `dockerfile` y
+  `.dockerignore` con producción ya en Cloudflare. Apagar la app de Fly
+  (`davidblancv1`) en su panel queda en manos de David, fuera del repo.
 - 2026-11-17 (AGE-143): Vite 5 → 6 (el plugin de Cloudflare exige ≥ 6.1) y
   `engines.node` ≥ 22.12 (lo exige Wrangler 4). Se quitaron
   `@react-router/node`, `@react-router/serve` y el script `start`: no hay
@@ -60,11 +64,9 @@ _Updated 2026-11-17 (AGE-143)._
 
 ## Known issues / pending
 
-See `backlog.json` for the authoritative list. Highlights: pasos manuales
-de Cloudflare (David) y luego quitar Fly.io (`remove-fly-io`), definir el diseño nuevo (`docs/design-brief.md` y
-`DESIGN.md`), contenido real para `/concerts`, y pequeñas deudas vistas
-durante la migración (enlace a `/build/tailwind.css` que da 404,
-`<html lang="en">`, `console.log` en `SpotifyPlayer`).
+See `backlog.json` for the authoritative list. Highlights: definir el
+diseño nuevo (`docs/design-brief.md` y `DESIGN.md`) y contenido real para
+`/concerts`.
 
 ## How to run this project
 

@@ -29,43 +29,18 @@ don't need it: Workers Builds deploys on every push (see below).
 
 ## deployment: Cloudflare Workers Builds
 
-Production is `main`; every pull request gets its own preview URL. One-time
-setup, in this order:
+The site is deployed by [Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/)
+from this repo (`davidblanc/my-music-web`) to the Worker `davidblanc` (the
+`"name"` in `wrangler.jsonc`):
 
-### 1. Connect the repo in Workers Builds
+- **Production**: every merge to `main` builds (`npm run build`) and deploys
+  (`npx wrangler deploy`) to https://davidblanc.com and
+  https://www.davidblanc.com (custom domains of the Worker; the
+  `davidblanc.com` DNS zone lives in Cloudflare).
+- **Previews**: every pull request is built and uploaded as a Worker version
+  (`npx wrangler versions upload`); the Cloudflare GitHub app comments the
+  preview URL on the PR.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go
-   to **Workers & Pages** → **Create** → **Import a repository**.
-2. Connect GitHub if asked and pick `davidblanc/my-music-web`.
-3. Settings:
-   - **Project name**: `davidblanc` (must match `"name"` in `wrangler.jsonc`).
-   - **Build command**: `npm run build`
-   - **Deploy command**: `npx wrangler deploy`
-   - **Root directory**: leave empty (repo root).
-4. Click **Create and deploy**. The first build deploys `main` to
-   `https://davidblanc.<your-subdomain>.workers.dev`. Check it opens.
-5. In the Worker → **Settings** → **Build**:
-   - **Branch control**: production branch `main`.
-   - Turn on **Builds for non-production branches**, with the non-production
-     deploy command `npx wrangler versions upload`. Each PR then gets a
-     preview URL, posted as a comment on the PR by the Cloudflare GitHub app.
-   - In **Settings** → **Domains & Routes**, check **Preview URLs** is on
-     (it is by default with `workers.dev`).
-
-### 2. Move davidblanc.com to Cloudflare
-
-1. Dashboard → **Add a domain** → `davidblanc.com` → **Free** plan. Cloudflare
-   scans and imports the current DNS records: review them (keep any MX/TXT
-   for email) and delete the records that point to Fly.io (`A`/`AAAA`/`CNAME`
-   for `davidblanc.com` and `www`).
-2. At the domain registrar, replace the nameservers with the two Cloudflare
-   gives you. Wait until the domain shows **Active** in Cloudflare (minutes
-   to a few hours).
-3. Worker `davidblanc` → **Settings** → **Domains & Routes** → **Add** →
-   **Custom domain** → `davidblanc.com`. Repeat for `www.davidblanc.com`.
-   Cloudflare creates the DNS records and the certificate.
-4. Check `https://davidblanc.com` and `https://www.davidblanc.com` serve the
-   site from Cloudflare (response header `server: cloudflare`).
-5. Once it's stable, stop the Fly.io app (`fly apps destroy davidblancv1` or
-   from the Fly dashboard) and remove `fly.toml` and `dockerfile` from the
-   repo (backlog item `remove-fly-io`).
+Build settings, domains and DNS are managed in the
+[Cloudflare dashboard](https://dash.cloudflare.com/) (Worker `davidblanc` →
+**Settings** → **Build** / **Domains & Routes**), not in this repo.
