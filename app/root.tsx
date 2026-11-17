@@ -12,7 +12,6 @@ import "./styles/global.css";
 import GeneralErrorBoundary from "./components/error-boundary";
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: "/build/tailwind.css" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -27,7 +26,7 @@ export const links: LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

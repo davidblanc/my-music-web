@@ -58,7 +58,6 @@ export default function SpotifyPlayer(props: {
         loading="lazy"
         className={`rounded-lg`}
         onLoad={() => {
-          console.log("loaded");
           setLoading(false);
         }}
       />

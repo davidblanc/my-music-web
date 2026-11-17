@@ -56,7 +56,7 @@
         "migrate-remix-to-react-router-7"
       ],
       "blockedReason": null,
-      "notes": "AGE-143. Done 2026-11-17: @cloudflare/vite-plugin + wrangler.jsonc + workers/app.ts + entry.server con renderToReadableStream; scripts build/preview/deploy; README con los pasos de Workers Builds y del dominio. Falta lo manual de David (conectar el repo y mover el DNS) y quitar Fly.io (remove-fly-io).",
+      "notes": "AGE-143. Done 2026-11-17: @cloudflare/vite-plugin + wrangler.jsonc + workers/app.ts + entry.server con renderToReadableStream; scripts build/preview/deploy; README con los pasos de Workers Builds y del dominio. Lo manual de David (Workers Builds y DNS) quedó hecho; Fly.io se quitó en AGE-145 (remove-fly-io).",
       "added": "2026-11-17"
     },
     {
@@ -64,7 +64,7 @@
       "title": "Quitar Fly.io: borrar fly.toml y dockerfile y apagar la app davidblancv1",
       "priority": "P2",
       "effort": "S",
-      "status": "blocked",
+      "status": "done",
       "area": [
         "fly.toml",
         "dockerfile",
@@ -75,9 +75,9 @@
       "dependsOn": [
         "deploy-cloudflare"
       ],
-      "blockedReason": "Esperando a que davidblanc.com sirva desde Cloudflare (pasos manuales de David en el README: Workers Builds + dominio).",
-      "notes": "Desde AGE-143 el build genera un Worker, así que el dockerfile ya no construye una imagen válida desde main (no hay react-router-serve). Fly sigue sirviendo la imagen ya desplegada hasta el cambio de DNS. Al quitarlo, actualizar también la regla 'Despliegue' de ## Project rules en CLAUDE.md (la edita David).",
-      "acceptanceCriteria": "davidblanc.com responde con server: cloudflare; fly.toml, dockerfile y .dockerignore borrados; app de Fly apagada.",
+      "blockedReason": null,
+      "notes": "Desde AGE-143 el build genera un Worker, así que el dockerfile ya no construye una imagen válida desde main (no hay react-router-serve). Fly sigue sirviendo la imagen ya desplegada hasta el cambio de DNS. Al quitarlo, actualizar también la regla 'Despliegue' de ## Project rules en CLAUDE.md (la edita David). AGE-145. Done 2026-11-17: davidblanc.com y www responden con server: cloudflare; borrados fly.toml, dockerfile y .dockerignore; README, CLAUDE.md (regla Despliegue con el texto de David) y STATUS al día. Apagar la app davidblancv1 en Fly queda fuera del repo (David).",
+      "acceptanceCriteria": "davidblanc.com responde con server: cloudflare; fly.toml, dockerfile y .dockerignore borrados.",
       "added": "2026-11-17"
     },
     {
@@ -100,13 +100,13 @@
       "title": "Quitar el <link> a /build/tailwind.css del root (da 404 en cada página)",
       "priority": "P3",
       "effort": "S",
-      "status": "pending",
+      "status": "done",
       "area": [
         "app/root.tsx"
       ],
       "dependsOn": [],
       "blockedReason": null,
-      "notes": "Resto de una configuración vieja; Tailwind ya entra por el import de app/tailwind.css. Se dejó en AGE-142 para mantener la migración 1:1.",
+      "notes": "Resto de una configuración vieja; Tailwind ya entra por el import de app/tailwind.css. Se dejó en AGE-142 para mantener la migración 1:1. AGE-145. Done 2026-11-17: quitado de links() en app/root.tsx; sin 404 en consola, capturas iguales.",
       "acceptanceCriteria": "Sin 404 de /build/tailwind.css en la consola; capturas sin cambios.",
       "added": "2026-11-17"
     },
@@ -115,13 +115,13 @@
       "title": "Cambiar <html lang=\"en\"> a \"es\" (el contenido está en castellano)",
       "priority": "P3",
       "effort": "S",
-      "status": "pending",
+      "status": "done",
       "area": [
         "app/root.tsx"
       ],
       "dependsOn": [],
       "blockedReason": null,
-      "notes": "Accesibilidad y SEO. Visto durante AGE-142.",
+      "notes": "Accesibilidad y SEO. Visto durante AGE-142. AGE-145. Done 2026-11-17: <html lang=\"es\"> en app/root.tsx, con test en test/root.test.tsx.",
       "added": "2026-11-17"
     },
     {
@@ -129,13 +129,13 @@
       "title": "Quitar el console.log(\"loaded\") de SpotifyPlayer",
       "priority": "P3",
       "effort": "S",
-      "status": "pending",
+      "status": "done",
       "area": [
         "app/components/SpotifyPlayer.tsx"
       ],
       "dependsOn": [],
       "blockedReason": null,
-      "notes": "Visto durante AGE-142.",
+      "notes": "Visto durante AGE-142. AGE-145. Done 2026-11-17: quitado el console.log del onLoad del iframe; test en test/root.test.tsx.",
       "added": "2026-11-17"
     },
     {
