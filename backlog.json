@@ -1,0 +1,107 @@
+{
+  "$comment": "Structured, machine-parseable backlog — complements STATUS.md's prose. Read by dispatch-pending to classify items as independent/dependent. Run ~/agent-box/scripts/validate-backlog.sh after editing this by hand.",
+  "$schema_example": {
+    "id": "kebab-case-unique-slug",
+    "title": "One-line description of the pending work",
+    "priority": "Optional. P1 (do next) | P2 (soon) | P3 (when convenient)",
+    "effort": "Optional. S (under an hour or two) | M (a session) | L (several sessions, plan first)",
+    "status": "pending | in_progress | blocked | done",
+    "area": [
+      "path/to/files/this/touches/"
+    ],
+    "dependsOn": [
+      "other-item-id-this-is-coupled-with"
+    ],
+    "blockedReason": "null unless status is blocked, then why",
+    "notes": "Extra context a fresh session/agent would need — why this exists, constraints.",
+    "acceptanceCriteria": "Optional. How to verify it's done, agreed before starting (tests, a Playwright check, a command's output) — what an independent reviewer checks.",
+    "added": "YYYY-MM-DD"
+  },
+  "items": [
+    {
+      "id": "migrate-remix-to-react-router-7",
+      "title": "Base de agent-box y migración de Remix 2 a React Router 7",
+      "priority": "P1",
+      "effort": "M",
+      "status": "done",
+      "area": ["app/", "package.json", "vite.config.ts", "react-router.config.ts", "tsconfig.json", "test/"],
+      "dependsOn": [],
+      "blockedReason": null,
+      "notes": "AGE-142. Done 2026-11-17: React Router 7 + flatRoutes, verify (lint + typecheck + Vitest), smoke test, STATUS/backlog/CLAUDE.md/docs/producto.md, mailto/README/dockerfile fixes.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "deploy-cloudflare",
+      "title": "Migrar el despliegue de Fly.io a Cloudflare",
+      "priority": "P2",
+      "effort": "M",
+      "status": "pending",
+      "area": ["react-router.config.ts", "vite.config.ts", "package.json", "fly.toml", "dockerfile"],
+      "dependsOn": ["migrate-remix-to-react-router-7"],
+      "blockedReason": null,
+      "notes": "Fuera de alcance de AGE-142 (issue aparte). fly.toml y dockerfile se borran solo cuando Cloudflare esté en producción.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "design-brief-and-design-md",
+      "title": "Definir el diseño nuevo: docs/design-brief.md y DESIGN.md",
+      "priority": "P2",
+      "effort": "M",
+      "status": "pending",
+      "area": ["docs/design-brief.md", "DESIGN.md"],
+      "dependsOn": [],
+      "blockedReason": null,
+      "notes": "Issue aparte según AGE-142. Lo decide David.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "remove-dead-build-tailwind-link",
+      "title": "Quitar el <link> a /build/tailwind.css del root (da 404 en cada página)",
+      "priority": "P3",
+      "effort": "S",
+      "status": "pending",
+      "area": ["app/root.tsx"],
+      "dependsOn": [],
+      "blockedReason": null,
+      "notes": "Resto de una configuración vieja; Tailwind ya entra por el import de app/tailwind.css. Se dejó en AGE-142 para mantener la migración 1:1.",
+      "acceptanceCriteria": "Sin 404 de /build/tailwind.css en la consola; capturas sin cambios.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "html-lang-es",
+      "title": "Cambiar <html lang=\"en\"> a \"es\" (el contenido está en castellano)",
+      "priority": "P3",
+      "effort": "S",
+      "status": "pending",
+      "area": ["app/root.tsx"],
+      "dependsOn": [],
+      "blockedReason": null,
+      "notes": "Accesibilidad y SEO. Visto durante AGE-142.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "spotify-player-cleanup",
+      "title": "Quitar el console.log(\"loaded\") de SpotifyPlayer",
+      "priority": "P3",
+      "effort": "S",
+      "status": "pending",
+      "area": ["app/components/SpotifyPlayer.tsx"],
+      "dependsOn": [],
+      "blockedReason": null,
+      "notes": "Visto durante AGE-142.",
+      "added": "2026-11-17"
+    },
+    {
+      "id": "concerts-page-content",
+      "title": "Contenido real para /concerts (hoy es un placeholder con \"hola\")",
+      "priority": "P3",
+      "effort": "M",
+      "status": "blocked",
+      "area": ["app/routes/_app.concerts.tsx"],
+      "dependsOn": ["design-brief-and-design-md"],
+      "blockedReason": "Falta decidir con David qué muestra la página y de dónde salen las fechas (ver docs/producto.md, Preguntas abiertas).",
+      "notes": "Relacionado: el botón 'Comprar Tickets' de la home no enlaza a nada y el show del 21 de mayo de 2025 no tiene lugar.",
+      "added": "2026-11-17"
+    }
+  ]
+}

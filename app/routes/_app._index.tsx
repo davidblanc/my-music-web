@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "react-router";
 
 import dbHeroBg from "~/assets/db-hero-bg.webp";
 import circulosCover from "~/assets/circulos-tapa.jpg";
@@ -173,7 +173,7 @@ export default function Index() {
           <p className="mt-8 text-gray-400">
             Contacto para shows y colaboraciones: <br />
             <a
-              href="mailto:contacto@tudominio.com"
+              href="mailto:davidblanc@gmail.com"
               className="text-white hover:text-gray-300"
             >
               davidblanc@gmail.com
