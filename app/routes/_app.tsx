@@ -1,4 +1,4 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet } from "react-router";
 import NavBar from "~/components/NavBar";
 
 export default function AppLayout() {

@@ -1,7 +1,7 @@
 # Welcome to Music Web Site!
 
-This is a [Remix](https://remix.run) app to show my music:
-www.daviblanc.com
+This is a [React Router 7](https://reactrouter.com) app to show my music:
+www.davidblanc.com
 
 ## development
 

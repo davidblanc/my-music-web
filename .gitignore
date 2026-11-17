@@ -5,3 +5,10 @@ node_modules
 .env
 
 .DS_Store
+# React Router
+/.react-router/
+
+# agent-box
+.claude/worktrees/
+.claude/settings.local.json
+.impeccable/
