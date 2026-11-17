@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "davidblanc",
+  "compatibility_date": "2026-11-01",
+  "main": "./workers/app.ts",
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true
+}
